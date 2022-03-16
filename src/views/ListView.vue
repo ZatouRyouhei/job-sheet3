@@ -39,27 +39,27 @@
         </template>
       </p-column>
       <p-column v-if="fieldContains('occurTime')" field="occurTime" header="発生時間" :style="{width:'80px'}"></p-column>
+      <p-column v-if="fieldContains('contact')" field="contact.name" header="窓口" :style="{width:'130px'}"></p-column>
       <p-column v-if="fieldContains('title')" field="title" header="タイトル" :style="{width:'200px'}"></p-column>
       <p-column v-if="fieldContains('content')" field="content" header="内容" :style="{width:'380px'}" >
         <template #body="{data}">
             <pre style="white-space: pre-wrap;">{{data.content}}</pre>
         </template>
       </p-column>
-      <p-column v-if="fieldContains('contact')" field="contact.name" header="窓口" :style="{width:'130px'}"></p-column>
-      <p-column v-if="fieldContains('deal')" field="deal.name" header="対応者" :style="{width:'130px'}"></p-column>
       <p-column v-if="fieldContains('limitDate')" field="limitDate" header="完了期限" :style="{width:'130px'}" :sortable="true">
         <template #body="{data}">
             {{formatDate(data.limitDate)}}
         </template>
       </p-column>
-      <p-column v-if="fieldContains('completeDate')" field="completeDate" header="完了日" :style="{width:'130px'}" :sortable="true">
-        <template #body="{data}">
-            {{formatDate(data.completeDate)}}
-        </template>
-      </p-column>
       <p-column v-if="fieldContains('support')" field="support" header="対応詳細" :style="{width:'380px'}">
         <template #body="{data}">
             <pre style="white-space: pre-wrap;">{{data.support}}</pre>
+        </template>
+      </p-column>
+      <p-column v-if="fieldContains('deal')" field="deal.name" header="対応者" :style="{width:'130px'}"></p-column>
+      <p-column v-if="fieldContains('completeDate')" field="completeDate" header="完了日" :style="{width:'130px'}" :sortable="true">
+        <template #body="{data}">
+            {{formatDate(data.completeDate)}}
         </template>
       </p-column>
       <p-column v-if="fieldContains('responseTime')" field="responseTime" header="対応時間" :style="{width:'80px'}"></p-column>
@@ -196,13 +196,13 @@
           {field: 'person', header: '担当者'},
           {field: 'occurDate', header: '発生日'},
           {field: 'occurTime', header: '発生時間'},
+          {field: 'contact', header: '窓口'},
           {field: 'title', header: 'タイトル'},
           {field: 'content', header: '内容'},
-          {field: 'contact', header: '窓口'},
-          {field: 'deal', header: '対応者'},
           {field: 'limitDate', header: '完了期限'},
-          {field: 'completeDate', header: '完了日'},
           {field: 'support', header: '対応詳細'},
+          {field: 'deal', header: '対応者'},
+          {field: 'completeDate', header: '完了日'},
           {field: 'responseTime', header: '対応時間'},
           {field: 'attachment', header: '添付'}
       ]);

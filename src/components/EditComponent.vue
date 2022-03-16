@@ -22,7 +22,7 @@
 				<label id="inquiry-label" for="inquiry" class="required">問合せ区分</label>
 				<p-dropdown id="inquiry" :options="inquiryList" optionLabel="name" optionValue="id" :showClear="true"
 										v-model="v$.inquiry.$model" :class="{'p-invalid':v$.inquiry.$invalid && submitted}"/>
-				<label id="department-label" for="department" class="required">問合せ部署（{{v$.department.maxLength.$params.max}}文字まで）</label>
+				<label id="department-label" for="department" class="required">部署（{{v$.department.maxLength.$params.max}}文字まで）</label>
 				<p-input-text id="department" type="text" v-model="v$.department.$model" :class="{'p-invalid':v$.department.$invalid && submitted}" />
 				<label id="person-label" for="person" class="required">担当者（{{v$.person.maxLength.$params.max}}文字まで）</label>
 				<p-input-text id="person" type="text" v-model="v$.person.$model" :class="{'p-invalid':v$.person.$invalid && submitted}" />
@@ -44,7 +44,7 @@
 										v-model="v$.contact.$model" :class="{'p-invalid':v$.contact.$invalid && submitted}"/>
 				<label id="title-label" for="title" class="required">タイトル</label>
 				<p-input-text id="title" type="text" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted}" />
-				<label id="content-label" for="content" class="required">詳細 （{{v$.content.maxLength.$params.max}}文字まで。現在{{state.content.length}}文字）</label>
+				<label id="content-label" for="content" class="required">内容 （{{v$.content.maxLength.$params.max}}文字まで。現在{{state.content.length}}文字）</label>
 				<p-textarea id="content" rows="6" cols="30" v-model="v$.content.$model" :class="{'p-invalid':v$.content.$invalid && submitted}" />
 			</div>
 

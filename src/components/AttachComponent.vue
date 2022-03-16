@@ -14,7 +14,7 @@
 				<p-column field="fileName" header="ファイル名" :style="{width:'300px'}"></p-column>
 				<p-column :style="{width:'80px'}">
 					<template #body="{data}">
-						<p-button icon="pi pi-download" v-tooltip="'ダウンロード'" class="p-button-rounded p-button-info p-button-sm" :loading="downloading[data.seqNo]" @click="downloadFile(data)" />
+						<p-button icon="pi pi-download" v-tooltip="'ダウンロード'" class="p-button-rounded p-button-success p-button-sm" :loading="downloading[data.seqNo]" @click="downloadFile(data)" />
 					</template>
 				</p-column>
 				<p-column :style="{width:'80px'}">
