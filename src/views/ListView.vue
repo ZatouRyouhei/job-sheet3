@@ -1,6 +1,19 @@
 <template>
   <div class="list">
-    <p-data-table id="data-table" :value="searchList" :scrollable="true"  scrollDirection="both" showGridlines stripedRows scrollHeight="calc(100vh - 100px)" :loading="loading" :rowHover="true" class="p-datatable-sm">
+    <p-data-table
+    id="data-table"
+    :value="searchList"
+    :scrollable="true"
+    scrollDirection="both"
+    showGridlines
+    stripedRows
+    scrollHeight="calc(100vh - 100px)"
+    :loading="loading"
+    selectionMode="single"
+    dataKey="id"
+    v-model:selection="selectedData"
+    class="p-datatable-sm"
+    :rowStyle="{cursor: 'default'}">
       <p-toolbar>
         <template #start>
           <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
@@ -152,6 +165,7 @@
       const store = useStore()
       const searchList = ref<JobSheetType[]>([])
       const loading = ref(false)
+      const selectedData = ref()
       //const searchComponentRef = ref()
       // 検索条件（初期表示時は自分が窓口となっているデータを検索する。）
       const searchCondition = ref<SearchConditionType>({
@@ -438,7 +452,7 @@
         // newJobSheetDialog,
         searchDialog, searchCondition,
         client, clientList, business, businessList, system, systemList, inquiry, inquiryList,
-				contact, contactList, deal, dealList, occurDate, limitDate, keyword, stateSelect, stateOptions, searchLoading, excelDownloading,
+				contact, contactList, deal, dealList, occurDate, limitDate, keyword, stateSelect, stateOptions, searchLoading, excelDownloading, selectedData,
         //searchComponentRef, dosearch
         search, formatDate, onToggle,
         fieldContains, getStatus, editJobSheet, newJobSheet, searchJobSheet, changeBusiness, jobSheetSearch, closeJobSheetDialog, getWarningMsg, downloadExcel}
@@ -450,6 +464,7 @@
 #data-table {
   font-size: 80%;
 }
+
 #new-button, #search-button {
   margin-right: 20px;
 }
