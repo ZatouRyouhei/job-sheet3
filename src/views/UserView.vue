@@ -1,16 +1,16 @@
 <template>
     <div class="user">
         <p-data-table id="user-table"
-        :value="userList"
-        :scrollable="true"
-        showGridlines
-        stripedRows
-        scrollHeight="600px"
-        @rowSelect="onRowSelect"
-        selectionMode="single"
-        dataKey="id"
-        v-model:selection="selectedUser"
-        class="p-datatable-sm">
+            :value="userList"
+            :scrollable="true"
+            showGridlines
+            stripedRows
+            scrollHeight="600px"
+            @rowSelect="onRowSelect"
+            selectionMode="single"
+            dataKey="id"
+            v-model:selection="selectedUser"
+            class="p-datatable-sm">
             <p-column field="id" header="ID" :style="{width:'300px'}"></p-column>
             <p-column field="name" header="氏名" :style="{width:'300px'}"></p-column>
         </p-data-table>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, onMounted, ref, reactive, PropType } from 'vue';
+    import { defineComponent, onMounted, ref, reactive } from 'vue';
     import { UserType } from '@/constantType'
     import axios from 'axios'
     import Constant from '@/constant'
@@ -46,10 +46,11 @@
             const userList = ref<UserType[]>([])
             const loading = ref(false)  // 登録ボタンのローディング
             const delLoading = ref(false) // 削除ボタンのローディング
-            const selectedUser = ref()
-            const disabled = ref(false)
-            const delDisabled = ref(true)
+            const selectedUser = ref()  // 一覧で選択したユーザ情報
+            const disabled = ref(false)  // IDの入力可、不可（新規の時は入力可、変更の時は入力不可）
+            const delDisabled = ref(true)  // 削除ボタンの使用可、不可（新規の時は使用不可、変更の時は使用可）
             const toast = useToast();
+            const confirm = useConfirm();
             const state = reactive({
                 id: '',
                 name: ''
@@ -112,6 +113,9 @@
                 }
             }
 
+            /**
+             * 入力欄クリア処理
+             */
             const onClear = () => {
                 submitted.value = false  // クリアしたときにエラーチェックが走らないようにする
                 disabled.value = false
@@ -120,6 +124,9 @@
                 state.name = ''
             }
 
+            /**
+             * 行を選択したときの処理
+             */
             const onRowSelect = (event: any) => {
                 disabled.value = true
                 delDisabled.value = false
@@ -127,7 +134,9 @@
                 state.name = event.data.name
             }
 
-            const confirm = useConfirm();
+            /**
+             * 削除処理
+             */
 			const delConfirm = (event:any) => {
 				confirm.require({
 					target: event.currentTarget,
@@ -137,7 +146,7 @@
 					accept: () => {
 						delLoading.value = true
                         axios.delete(Constant.URL_USER_DELETE + selectedUser.value.id).then((res) => {
-                            if (res.data == 1) {  // 使用されているため削除不可
+                            if (res.data === 1) {  // 使用されているため削除不可
                                 addToast('使用されているため削除できません。')
                             } else {  // 正常終了
                                 onClear()  // 入力欄をクリア
@@ -152,6 +161,10 @@
 					}
 				});
 			}
+
+            /**
+             * クリア処理
+             */
             const clearConfirm = (event:any) => {
                 confirm.require({
 					target: event.currentTarget,
@@ -159,15 +172,14 @@
 					icon: 'pi pi-info-circle',
 					acceptClass: 'p-button-danger',
 					accept: () => {
-                        submitted.value = false  // クリアしたときにエラーチェックが走らないようにする
-                        disabled.value = false
-                        delDisabled.value = true
-                        state.id = ''
-                        state.name = ''
+                        onClear() // 入力欄をクリア
 					}
 				});
             }
 
+            /**
+             * 初期処理
+             */
             onMounted(() => {
                 axios.get<UserType[]>(Constant.URL_USER_GETLIST).then((res) => {
 					userList.value = res.data
