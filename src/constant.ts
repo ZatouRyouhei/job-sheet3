@@ -6,6 +6,8 @@ const URL_USER_DELETE = URL_BASE + 'user/delete/'
 const URL_USER_CHANGEPASSWORD = URL_BASE + 'user/changePassword/'
 const URL_USER_CHANGESEQ = URL_BASE + 'user/changeSeq/'
 const URL_CLIENT_GETLIST = URL_BASE + 'client/getList/'
+const URL_CLIENT_REGIST = URL_BASE + 'client/regist/'
+const URL_CLIENT_DELETE = URL_BASE + 'client/delete/'
 const URL_BUSINESS_GETLIST = URL_BASE + 'business/getList/'
 const URL_SYSTEM_GETLIST = URL_BASE + 'system/getList/'
 const URL_INQUIRY_GETLIST = URL_BASE + 'inquiry/getList/'
@@ -31,6 +33,8 @@ export default {
     URL_USER_CHANGEPASSWORD,
     URL_USER_CHANGESEQ,
     URL_CLIENT_GETLIST,
+    URL_CLIENT_REGIST,
+    URL_CLIENT_DELETE,
     URL_BUSINESS_GETLIST,
     URL_SYSTEM_GETLIST,
     URL_INQUIRY_GETLIST,
