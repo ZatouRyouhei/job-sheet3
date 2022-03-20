@@ -35,9 +35,19 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../views/UserView.vue')
           },
           {
+            path: 'client',
+            name: 'client',
+            component: () => import('../views/ClientView.vue')
+          },
+          {
             path: 'business',
             name: 'business',
             component: () => import('../views/BusinessView.vue')
+          },
+          {
+            path: 'system',
+            name: 'system',
+            component: () => import('../views/SystemView.vue')
           }
         ]
       },
