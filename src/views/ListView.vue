@@ -18,7 +18,7 @@
         <template #start>
           <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
           <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
-          <p-button icon="pi pi-download" v-tooltip="'エクセル出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
+          <p-button icon="pi pi-file-excel" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
         </template>
         <template #end>
           <div style="text-align:right">
