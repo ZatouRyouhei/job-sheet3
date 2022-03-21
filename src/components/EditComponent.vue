@@ -71,8 +71,9 @@
 				</span>
 				<label id="responseTime-label" for="responseTime">対応時間（時間）</label>
 				<span id="responseTime">
-					<p-input-number  :step="0.5" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal" :min="0"
-													v-model="v$.responseTime.$model" :class="{'p-invalid':v$.responseTime.$invalid && submitted}" style="width: 230px; height: 50px;"/>
+					<p-input-number  :step="0.5" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+										incrementButtonClass="p-button-secondary" decrementButtonClass="p-button-secondary" mode="decimal" :min="0"
+										v-model="v$.responseTime.$model" :class="{'p-invalid':v$.responseTime.$invalid && submitted}" style="width: 230px; height: 50px;"/>
 				</span>
 				<p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 150px;"/>
 				<!-- 新規登録時は非表示にする -->

@@ -19,6 +19,7 @@
             <label id="business-id-label" for="business-id" class="required">ID</label>
 			<span id="business-id">
                 <p-input-number  :step="1" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+                                    incrementButtonClass="p-button-secondary" decrementButtonClass="p-button-secondary"
                                     mode="decimal" :min="1" v-model="v$.id.$model" :class="{'p-invalid':v$.id.$invalid && submitted}"
                                     :disabled="disabled" style="width: 230px; height: 50px;"/>
             </span>
