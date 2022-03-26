@@ -1,24 +1,25 @@
 <template>
   <div class="list">
     <p-data-table
-    id="data-table"
-    :value="searchList"
-    :scrollable="true"
-    scrollDirection="both"
-    showGridlines
-    stripedRows
-    scrollHeight="calc(100vh - 100px)"
-    :loading="loading"
-    selectionMode="single"
-    dataKey="id"
-    v-model:selection="selectedData"
-    class="p-datatable-sm"
-    :rowStyle="{cursor: 'default'}">
+      id="data-table"
+      :value="searchList"
+      :scrollable="true"
+      scrollDirection="both"
+      showGridlines
+      stripedRows
+      scrollHeight="calc(100vh - 100px)"
+      :loading="loading"
+      selectionMode="single"
+      dataKey="id"
+      v-model:selection="selectedData"
+      class="p-datatable-sm"
+      :rowStyle="{cursor: 'default'}"
+      :virtualScrollerOptions="{ itemSize: 30 }">
       <p-toolbar>
         <template #start>
           <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
           <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
-          <p-button icon="pi pi-file-excel" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
+          <p-button icon="pi pi-download" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
         </template>
         <template #end>
           <div style="text-align:right">
@@ -32,7 +33,7 @@
           </div>
         </template>
       </p-toolbar>
-      <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}" :sortable="true"></p-column>
+      <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}"></p-column>
       <p-column v-if="fieldContains('status')" header="ステータス" :style="{width:'100px'}">
         <template #body="{data}">
           <p-tag v-if="getStatus(data) === 'success'" class="mr-2" value="完了" severity="success" icon="pi pi-check"></p-tag>
@@ -46,7 +47,7 @@
       <p-column v-if="fieldContains('inquiry')" field="inquiry.name" header="問合せ区分" :style="{width:'100px'}"></p-column>
       <p-column v-if="fieldContains('department')" field="department" header="部署" :style="{width:'150px'}"></p-column>
       <p-column v-if="fieldContains('person')" field="person" header="担当者" :style="{width:'130px'}"></p-column>
-      <p-column v-if="fieldContains('occurDate')" field="occurDate" header="発生日" :style="{width:'130px'}" :sortable="true">
+      <p-column v-if="fieldContains('occurDate')" field="occurDate" header="発生日" :style="{width:'130px'}">
         <template #body="{data}">
             {{formatDate(data.occurDate)}}
         </template>
@@ -59,7 +60,7 @@
             <pre style="white-space: pre-wrap;">{{data.content}}</pre>
         </template>
       </p-column>
-      <p-column v-if="fieldContains('limitDate')" field="limitDate" header="完了期限" :style="{width:'130px'}" :sortable="true">
+      <p-column v-if="fieldContains('limitDate')" field="limitDate" header="完了期限" :style="{width:'130px'}">
         <template #body="{data}">
             {{formatDate(data.limitDate)}}
         </template>
@@ -70,7 +71,7 @@
         </template>
       </p-column>
       <p-column v-if="fieldContains('deal')" field="deal.name" header="対応者" :style="{width:'130px'}"></p-column>
-      <p-column v-if="fieldContains('completeDate')" field="completeDate" header="完了日" :style="{width:'130px'}" :sortable="true">
+      <p-column v-if="fieldContains('completeDate')" field="completeDate" header="完了日" :style="{width:'130px'}">
         <template #body="{data}">
             {{formatDate(data.completeDate)}}
         </template>
