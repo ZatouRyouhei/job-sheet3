@@ -804,21 +804,21 @@
 	align-self: start;
 }
 #submit-btn {
-	grid-column: 3 / 4;
+	grid-column: 2 / 3;
 	grid-row: 7 / 8;
 	justify-self: start;
 	align-self: end;
 }
 #attach-btn {
-	grid-column: 3 / 4;
+	grid-column: 2 / 3;
 	grid-row: 7 / 8;
 	justify-self: end;
 	align-self: end;
 }
 #delete-btn {
-	grid-column: 2 / 3;
+	grid-column: 3 / 4;
 	grid-row: 7 / 8;
-	justify-self: start;
+	justify-self: end;
 	align-self: end;
 }
 </style>
