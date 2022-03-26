@@ -8,16 +8,16 @@
     <section>
       <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
         <span id="user-id" class="p-float-label">
-          <p-input-text id="userid" type="text" v-model="v$.userid.$model" :class="{'p-invalid':v$.userid.$invalid && submitted}" />
+          <p-input-text id="userid" type="text" v-model="v$.userid.$model" :class="{'p-invalid':v$.userid.$invalid && submitted}" style="width: 200px;"/>
           <label for="userid">ユーザID</label>
         </span>
         
         <span id="password" class="p-float-label">
-          <p-password id="password" v-model="v$.password.$model" :feedback="false" :class="{'p-invalid':v$.password.$invalid && submitted}" />
+          <p-password id="password" v-model="v$.password.$model" :feedback="false" :class="{'p-invalid':v$.password.$invalid && submitted}" style="width: 200px;" />
           <label for="password">パスワード</label>
         </span>
         
-        <p-button type="submit" label="ログイン" icon="pi pi-sign-in" class="p-button-info" :loading="loading"/>
+        <p-button type="submit" label="ログイン" icon="pi pi-sign-in" class="p-button-info" :loading="loading" style="width: 200px;"/>
         <p-toast group="tk" />
       </form>
     </section>
