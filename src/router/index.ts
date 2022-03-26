@@ -53,6 +53,11 @@ const routes: Array<RouteRecordRaw> = [
             path: 'userSeq',
             name: 'userSeq',
             component: () => import('../views/UserSeqView.vue')
+          },
+          {
+            path: 'stats',
+            name: 'stats',
+            component: () => import('../views/StatsView.vue')
           }
         ]
       },

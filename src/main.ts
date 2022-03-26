@@ -24,6 +24,8 @@ import TabMenu from 'primevue/tabmenu';
 import ProgressSpinner from 'primevue/progressspinner';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Row from 'primevue/row';
+import ColumnGroup from 'primevue/columngroup';
 import MultiSelect from 'primevue/multiselect';
 import Tag from 'primevue/tag';
 import Toolbar from 'primevue/toolbar';
@@ -36,6 +38,7 @@ import Badge from 'primevue/badge';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmPopup from 'primevue/confirmpopup';
 import FileUpload from 'primevue/fileupload';
+import Chart from 'primevue/chart';
 
 const app = createApp(App);
 app.use(store, key).use(router)
@@ -55,6 +58,8 @@ app.component('p-tabmenu', TabMenu)
 app.component('p-progress-spinner', ProgressSpinner)
 app.component('p-data-table', DataTable)
 app.component('p-column', Column)
+app.component('p-row', Row)
+app.component('p-column-group', ColumnGroup)
 app.component('p-multi-select', MultiSelect)
 app.component('p-tag', Tag)
 app.component('p-toolbar', Toolbar)
@@ -66,6 +71,7 @@ app.component('p-input-number', InputNumber)
 app.component('p-badge', Badge)
 app.component('p-confirm-popup', ConfirmPopup)
 app.component('p-file-upload', FileUpload)
+app.component('p-chart', Chart)
 app.directive('tooltip', Tooltip)
 app.directive('badge', BadgeDirective)
 
