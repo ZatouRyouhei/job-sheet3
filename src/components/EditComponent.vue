@@ -86,15 +86,15 @@
 		<p-toast group="tk"/>
 
 		<!-- 添付ファイルダウンロードダイアログ -->
-    <p-dialog header="添付ファイル" v-model:visible="fileDownloadDialog">
+		<p-dialog header="添付ファイル" v-model:visible="fileDownloadDialog">
 			<attach-component v-bind:editJobSheetId="registId" v-on:resetFileNo="resetFileNo"/>
-    </p-dialog>
+		</p-dialog>
 	</div>
 </template>
 
 <script lang="ts">
-	import { defineComponent, onMounted, ref, reactive, PropType } from 'vue';
-	import { ClientType, BusinessType, SystemType, InquiryType, UserType, SearchConditionType, JobSheetType, JobSheetFormType, AttachmentType } from '@/constantType'
+	import { defineComponent, onMounted, ref, reactive} from 'vue';
+	import { ClientType, BusinessType, SystemType, InquiryType, UserType, JobSheetType, JobSheetFormType } from '@/constantType'
 	import axios from 'axios'
 	import Constant from '@/constant'
 	import { required, maxLength } from "@vuelidate/validators";
@@ -107,24 +107,20 @@
 
 	export default defineComponent({
 		props: {
-			// editJobSheet: {
-			// 	type: Object as PropType<JobSheetType>
-			// },
 			targetId: {
 				type: String,
 				required: true
 			}
 		},
 		components: {
-      AttachComponent
-    },
-
+			AttachComponent
+		},
 		setup(props, context) {
 			const store = useStore()
-
+			const toast = useToast()
 			const state = reactive<JobSheetFormType>({
-        client: 0,
-        business: 0,
+				client: 0,
+				business: 0,
 				system: 0,
 				inquiry: 0,
 				department: '',
@@ -183,7 +179,6 @@
 			const headerFlg = ref(true)  // IDとステータスの表示
 			const submitted = ref(false);
 			const v$ = useVuelidate(rules, state);
-			const toast = useToast();
 
 			const handleSubmit = (isFormValid: boolean) => {
 				submitted.value = true;
@@ -191,52 +186,52 @@
 					// 入力エラーがある場合
 					if (v$.value.client.$invalid && submitted) {
 						addToast("顧客を入力してください。")
-          }
+					}
 					if (v$.value.business.$invalid && submitted) {
-            addToast("業務を入力してください。")
-          }
+						addToast("業務を入力してください。")
+					}
 					if (v$.value.system.$invalid && submitted) {
-            addToast("システムを入力してください。")
-          }
+						addToast("システムを入力してください。")
+					}
 					if (v$.value.inquiry.$invalid && submitted) {
-            addToast("問合せ区分を入力してください。")
-          }
+						addToast("問合せ区分を入力してください。")
+					}
 					if (v$.value.department.required.$invalid && submitted) {
-            addToast("問合せ部署を入力してください。")
-          }
+						addToast("問合せ部署を入力してください。")
+					}
 					if (v$.value.department.maxLength.$invalid && submitted) {
-            addToast('問合せ部署は' + v$.value.department.maxLength.$params.max + '文字以内で入力してください。')
+						addToast('問合せ部署は' + v$.value.department.maxLength.$params.max + '文字以内で入力してください。')
 					}
 					if (v$.value.person.required.$invalid && submitted) {
 						addToast("担当者を入力してください。")
-          }
+					}
 					if (v$.value.person.maxLength.$invalid && submitted) {
 						addToast('担当者は' + v$.value.person.maxLength.$params.max + '文字以内で入力してください。')
-          }
+					}
 					if (v$.value.occurDate.$invalid && submitted) {
 						addToast("発生日を入力してください。")
-          }
+					}
 					if (v$.value.occurTime.$invalid && submitted) {
 						addToast("発生時間を入力してください。")
-          }
+					}
 					if (v$.value.contact.$invalid && submitted) {
 						addToast("窓口を入力してください。")
-          }
+					}
 					if (v$.value.title.required.$invalid && submitted) {
 						addToast("タイトルを入力してください。")
-          }
+					}
 					if (v$.value.title.maxLength.$invalid && submitted) {
 						addToast('タイトルは' + v$.value.title.maxLength.$params.max + '文字以内で入力してください。')
-          }
+					}
 					if (v$.value.content.required.$invalid && submitted) {
 						addToast("詳細を入力してください。")
-          }
+					}
 					if (v$.value.content.maxLength.$invalid && submitted) {
 						addToast('詳細は' + v$.value.content.maxLength.$params.max + '文字以内で入力してください。')
-          }
+					}
 					if (v$.value.support.maxLength.$invalid && submitted) {
 						addToast('対応詳細は' + v$.value.support.maxLength.$params.max + '文字以内で入力してください。')
-          }
+					}
 				} else {
 					// 入力エラーがない場合、登録処理を実行
 					loading.value = true;
@@ -319,20 +314,18 @@
 			const contactList = ref<UserType[]>([])
 			const dealList = ref<UserType[]>([])
 
-			//const tmpJobSheet = ref<JobSheetType>()  // propsで渡されたeditJobSheetは変更不可のため、一時保存用の変数を用意し、初期処理で設定する。以降はこの変数を使用する。
-			// const tmpJobSheet = ref<JobSheetType>()
 			const registId = ref('')  // propsで渡されたIdはreadonlyとなる。そのため、新規登録時に付番されるIDを扱うために登録用IDを別に用意しておく
 
 			// 添付ファイルの数
 			const files = ref('0')
 
 			// 初期処理
-      onMounted(() => {
-        // 顧客名リスト取得
+			onMounted(() => {
+				// 顧客名リスト取得
 				axios.get<ClientType[]>(Constant.URL_CLIENT_GETLIST).then((res) => {
 					clientList.value = res.data
 				})
-        // 業務リスト取得
+				// 業務リスト取得
 				axios.get<BusinessType[]>(Constant.URL_BUSINESS_GETLIST).then((res) => {
 					businessList.value = res.data
 				})
@@ -384,44 +377,7 @@
 
 				// 新規登録のときは新規フラグをtrueにする
 				newFlg.value = props.targetId ? false : true
-
-				// if (props.editJobSheet !== null && props.editJobSheet !== undefined) {
-				// 	state.client = props.editJobSheet.client.id
-				// 	state.business = props.editJobSheet.businessSystem.business.id
-				// 	state.system = props.editJobSheet.businessSystem.id
-				// 	state.inquiry = props.editJobSheet.inquiry.id
-				// 	state.department = props.editJobSheet.department
-				// 	state.person = props.editJobSheet.person
-				// 	const occurDateTime = DateUtil.strToDateTime(props.editJobSheet.occurDate, props.editJobSheet.occurTime)
-				// 	state.occurDate = occurDateTime
-				// 	state.occurTime = occurDateTime
-				// 	state.contact = props.editJobSheet.contact.id
-				// 	state.title = props.editJobSheet.title
-				// 	state.content = props.editJobSheet.content
-				// 	state.limitDate = ''
-				// 	if (props.editJobSheet.limitDate) {
-				// 		state.limitDate = DateUtil.strToDate(props.editJobSheet.limitDate)
-				// 	}
-				// 	state.support = props.editJobSheet.support
-				// 	state.deal = props.editJobSheet.deal.id
-				// 	state.completeDate = ''
-				// 	if (props.editJobSheet.completeDate) {
-				// 		state.completeDate = DateUtil.strToDate(props.editJobSheet.completeDate)
-				// 	}
-				// 	state.responseTime = props.editJobSheet.responseTime
-
-				// 	// ステータスをセットする。
-				// 	setStatus(props.editJobSheet.id)
-
-				// 	registId.value = props.editJobSheet.id
-
-				// 	// システムプルダウンを生成する
-				// 	axios.get<SystemType[]>(Constant.URL_SYSTEM_GETLIST + state.business).then((res) => {
-				// 		systemList.value = res.data
-				// 	})
-				// }
-				
-      })
+			})
 
 			// 業務プルダウンを選択したときに、自動的にシステムプルダウンを生成する。
 			const changeBusiness = () => {
@@ -432,65 +388,8 @@
 				state.system = 0
 			}
 
-			// 先頭に表示するID。新規登録のときは空とする。
-			// const getDispId = (data: JobSheetType) => {
-			// 	if (data !== null && data !== undefined) {
-			// 		return data.id
-			// 	} else {
-			// 		return ''
-			// 	}
-			// }
-
-			// ステータス判定処理
-      // const getStatus = (data: JobSheetType) => {
-      //   if (data !== null && data !== undefined) {
-			// 		const now = new Date()
-			// 		const limitDate = DateUtil.strToDate(data.limitDate)
-
-			// 		if (data.completeDate) {
-			// 			return "success"
-			// 		} else {
-			// 			if (limitDate !== null) {
-			// 				if (limitDate < now) {
-			// 					return "danger"
-			// 				} else {
-			// 					return ""
-			// 				}
-			// 			} else {
-			// 				return ""
-			// 			}
-			// 		}
-			// 	} else {
-			// 		return ""
-			// 	}
-				
-      // }
-
 			// ステータス判定処理
 			const jobStatus = ref('')
-			// const setStatus = (id: string) => {
-			// 	if (id) {
-			// 		axios.get<JobSheetType>(Constant.URL_JOBSHEET_GET + id).then((js) => {
-			// 			const now = new Date()
-			// 			const limitDate = DateUtil.strToDate(js.data.limitDate)
-			// 			if (js.data.completeDate) {
-			// 				jobStatus.value = "success"
-			// 			} else {
-			// 				if (limitDate !== null) {
-			// 					if (limitDate < now) {
-			// 						jobStatus.value = "danger"
-			// 					} else {
-			// 						jobStatus.value = ""
-			// 					}
-			// 				} else {
-			// 					jobStatus.value = ""
-			// 				}
-			// 			}
-			// 		}).catch(() => {
-			// 			jobStatus.value = ""
-			// 		})
-			// 	}
-			// }
 
 			const termDateMsg = ref('')
 			const setStatus = (limitDateStr: string, completeDateStr: string) => {
@@ -519,29 +418,12 @@
 			}
 
 			const newFlg = ref(false)
-			// 新規登録状態かどうかを判定する。
-			// const isNew = () => {
-			// 	if (registId.value) {
-			// 		return false
-			// 	} else {
-			// 		return true
-			// 	}
-			// }
-
-			// 添付ファイル数を取得
-			// const getAttachNumber = (data: JobSheetType) => {
-			// 	if (data !== null && data !== undefined) {
-			// 		return String(data.fileList.length)
-			// 	} else {
-			// 		return '0'
-			// 	}
-			// }
 
 			// 添付ファイルボタンを押された時、ダウンロードダイアログを開く
-      const fileDownloadDialog = ref(false)
-      const downloadFile = () => {
-        fileDownloadDialog.value = true
-      }
+			const fileDownloadDialog = ref(false)
+			const downloadFile = () => {
+				fileDownloadDialog.value = true
+			}
 
 			// 対応者を自分に設定する
 			const selectMyself = () => {
@@ -555,11 +437,9 @@
 				context.emit("doemit")
 			}
 
-			return {state, rules, v$, submitted, loading, clientList, businessList, systemList, inquiryList, contactList, dealList, fileDownloadDialog, delLoading, registId, headerFlg,
-			newFlg, jobStatus, files, termDateMsg,
-			handleSubmit, changeBusiness, delConfirm, downloadFile, selectMyself, resetFileNo
-			// isNew
-			}
+			return {state, rules, v$, submitted, loading, clientList, businessList, systemList, inquiryList, contactList, dealList, fileDownloadDialog,
+					delLoading, registId, headerFlg, newFlg, jobStatus, files, termDateMsg,
+					handleSubmit, changeBusiness, delConfirm, downloadFile, selectMyself, resetFileNo}
 		}
 	})
 </script>

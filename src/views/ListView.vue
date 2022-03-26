@@ -94,19 +94,8 @@
         <edit-component v-bind:targetId="editId" v-on:doemit="search" v-on:closeDialog="closeJobSheetDialog"/>
     </p-dialog>
 
-    <!-- 業務日誌編集ダイアログ -->
-    <!--
-    <p-dialog position="left" header="新規登録" v-model:visible="newJobSheetDialog" :modal="true">
-        <edit-component  v-on:doemit="search" v-on:closeDialog="closeJobSheetDialog" />
-    </p-dialog>
-    -->
-
-    <!-- 業務日誌検索ダイアログ -->
     <!-- 検索部分を別のコンポーネントにしたかったが、ダイアログを閉じると入力していた検索条件が消えてしまう。
          検索条件を保持する方法がなさそうなので、別コンポーネントにはしなかった。
-    <p-dialog header="検索" v-model:visible="searchDialog">
-      <search-component v-on:doemit="dosearch" ref="searchComponentRef"/>
-    </p-dialog>
     -->
     <p-dialog header="検索" v-model:visible="searchDialog">
         <div class="search">
@@ -146,12 +135,11 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, reactive, onMounted } from 'vue';
+  import { defineComponent, ref, onMounted } from 'vue';
   import Constant from '@/constant'
   import axios from 'axios'
-  import { ClientType, BusinessType, SystemType, InquiryType, UserType, JobSheetType, SearchConditionType, AttachmentType } from '@/constantType'
+  import { ClientType, BusinessType, SystemType, InquiryType, UserType, JobSheetType, SearchConditionType } from '@/constantType'
   import DateUtil from '@/DateUtil'
-  //import SearchComponent from '@/components/SearchComponent.vue'
   import EditComponent from '@/components/EditComponent.vue'
   import { useStore } from '@/store'
   import { useToast } from "primevue/usetoast";
@@ -159,7 +147,6 @@
 
   export default defineComponent({
     components: {
-      //SearchComponent
       EditComponent
     },
     setup() {
@@ -167,7 +154,6 @@
       const searchList = ref<JobSheetType[]>([])
       const loading = ref(false)
       const selectedData = ref()
-      //const searchComponentRef = ref()
       // 検索条件（初期表示時は自分が窓口となっているデータを検索する。）
       const searchCondition = ref<SearchConditionType>({
         client: 0,
@@ -193,9 +179,6 @@
           loading.value = false
           // 検索ダイアログのロードを止める
           searchLoading.value = false
-
-          //searchComponentRef.value.loading = false
-          
         })
       }
 
@@ -285,7 +268,6 @@
       const editId = ref('')
       const header = ref('')
       // 業務日誌新規作成ボタンを押された時、新規作成ダイアログを開く
-      // const newJobSheetDialog = ref(false)
       const newJobSheet = () => {
         jobSheetDialog.value = true
         editId.value = ''
@@ -307,15 +289,8 @@
       const toast = useToast();
       const closeJobSheetDialog = () => {
         jobSheetDialog.value = false
-        // newJobSheetDialog.value = false
         toast.add({severity:'success', summary: '削除しました。', life: 5000, group: 'tk', closable: false});
       }
-
-      // 検索ダイアログから検索条件を受け取り検索を実行する。
-      // const dosearch = (searchCondFromComp: SearchConditionType) => {
-      //   searchCondition.value = searchCondFromComp
-      //   search()
-      // }
 
       // 一覧に表示する日付のフォーマッター
       const formatDate = (value: string) => {
@@ -449,14 +424,11 @@
       })
 
       return {searchList, loading, columns, selectedColumns, jobSheetDialog,
-        editId, header,
-        // newJobSheetDialog,
-        searchDialog, searchCondition,
+        editId, header, searchDialog, searchCondition,
         client, clientList, business, businessList, system, systemList, inquiry, inquiryList,
 				contact, contactList, deal, dealList, occurDate, limitDate, keyword, stateSelect, stateOptions, searchLoading, excelDownloading, selectedData,
-        //searchComponentRef, dosearch
-        search, formatDate, onToggle,
-        fieldContains, getStatus, editJobSheet, newJobSheet, searchJobSheet, changeBusiness, jobSheetSearch, closeJobSheetDialog, getWarningMsg, downloadExcel}
+        search, formatDate, onToggle, fieldContains, getStatus, editJobSheet, newJobSheet, searchJobSheet, changeBusiness, jobSheetSearch,
+        closeJobSheetDialog, getWarningMsg, downloadExcel}
     }
   })
 </script>
