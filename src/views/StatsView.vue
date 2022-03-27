@@ -103,7 +103,10 @@
             const display = ref(false)  // グラフ表示
             const title = ref('')  // ダイアログに表示するタイトル
             const targetChartYear = ref()  // グラフの対象年度
-            const targetData = ref<BusinessType>()  // グラフの対象システム
+            const targetData = ref<BusinessType>({   // グラフの対象システム
+                id: 0,
+                name: ''
+            })
             const resetKey = ref(0)  // コンポーネントを再描画するためのキー
             
             /**
