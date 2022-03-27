@@ -23,6 +23,7 @@
             <p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 150px;"/>
             <p-button id="clear-btn" v-on:click="clearConfirm($event)" label="クリア" icon="pi pi-times-circle" class="p-button-secondary p-button-outlined" style="width: 150px;"/>
             <p-button id="delete-btn" v-on:click="delConfirm($event)" label="削除" icon="pi pi-trash" class="p-button-danger p-button-outlined" :loading="delLoading" :disabled="delDisabled" style="width: 150px;"/>
+            <p-button id="init-btn" v-on:click="initConfirm($event)" label="初期化" icon="pi pi-history" class="p-button-warning p-button-outlined" :loading="initLoading" :disabled="delDisabled" style="width: 150px;"/>
         </form>
 
         <p-confirm-popup></p-confirm-popup>
@@ -49,6 +50,7 @@
             const selectedUser = ref()  // 一覧で選択したユーザ情報
             const disabled = ref(false)  // IDの入力可、不可（新規の時は入力可、変更の時は入力不可）
             const delDisabled = ref(true)  // 削除ボタンの使用可、不可（新規の時は使用不可、変更の時は使用可）
+            const initLoading = ref(false)
             const toast = useToast();
             const confirm = useConfirm();
             const state = reactive({
@@ -163,6 +165,33 @@
 			}
 
             /**
+             * パスワード初期化処理
+             * @param event 
+             */
+            const initConfirm = (event:any) => {
+                confirm.require({
+					target: event.currentTarget,
+					message: 'パスワードを初期化してよろしいですか？初期パスワードは11111です。',
+					icon: 'pi pi-info-circle',
+					acceptClass: 'p-button-danger',
+					accept: () => {
+						initLoading.value = true
+                        const userObj: UserType = {
+                            id: selectedUser.value.id,
+                            name: selectedUser.value.name,
+                            password: '11111',
+                            seqNo: 0
+                        }
+                        axios.post(Constant.URL_USER_REGIST, userObj).then(() => {
+                            toast.add({severity:'success', summary: '初期化しました。', life: 5000, group: 'tk', closable: false});
+                        }).finally(() => {
+                            initLoading.value = false
+                        })
+					}
+				});
+            }
+
+            /**
              * クリア処理
              */
             const clearConfirm = (event:any) => {
@@ -190,7 +219,8 @@
 				toast.add({severity:'error', summary: '入力にエラーがあります。', detail: message, life: 5000, group: 'tk', closable: false});
 			}
 
-            return {userList, loading, delLoading, state, rules, v$, submitted, selectedUser, disabled, delDisabled, handleSubmit, onRowSelect, clearConfirm, delConfirm}
+            return {userList, loading, delLoading, initLoading, state, rules, v$, submitted, selectedUser, disabled, delDisabled,
+                    handleSubmit, onRowSelect, clearConfirm, delConfirm, initConfirm}
         }
     })
 </script>
@@ -217,7 +247,7 @@
     display: grid;
 	grid-template-columns: 150px 150px 150px;
     column-gap: 10px;
-	grid-template-rows: 30px 80px 30px 80px 30px 80px;
+	grid-template-rows: 30px 80px 30px 80px 80px 80px;
 }
 #user-id-label {
     grid-column: 1 / -1;
@@ -258,6 +288,12 @@
 #delete-btn {
     grid-column: 3 / 4;
 	grid-row: 5 / 6;
+	justify-self: start;
+	align-self: start;
+}
+#init-btn {
+    grid-column: 1 / 2;
+	grid-row: 6 / 7;
 	justify-self: start;
 	align-self: start;
 }
