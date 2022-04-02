@@ -159,3 +159,8 @@ export type JobSheetStatsType = {
     leftCnt: number
     responseTimeSum: number
 }
+
+export type HolidayType = {
+    holiday: string
+    name: string
+}

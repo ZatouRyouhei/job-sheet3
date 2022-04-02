@@ -31,7 +31,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
-import { UserType } from '@/constantType'
+import { UserType, HolidayType } from '@/constantType'
 import Constant from '@/constant'
 import axios from 'axios'
 
@@ -85,6 +85,11 @@ export default defineComponent({
           // ログイン成功
           titlelogoDisplay.value = false
           store.commit("setUser", res.data)
+          // 祝日テーブルを取得
+          axios.get<HolidayType[]>(Constant.URL_HOLIDAY_GETLIST).then((h) => {
+            store.commit('setHolidayList', h.data)
+          })
+          // トップページへ遷移
           router.push("/about/list")
         } else {
           // ログイン失敗

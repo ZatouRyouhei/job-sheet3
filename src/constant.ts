@@ -24,6 +24,7 @@ const URL_BUSINESS_REGIST = URL_BASE + 'business/regist/'
 const URL_BUSINESS_DELETE = URL_BASE + 'business/delete/'
 const URL_SYSTEM_REGIST = URL_BASE + 'system/regist/'
 const URL_SYSTEM_DELETE = URL_BASE + 'system/delete/'
+const URL_HOLIDAY_GETLIST = URL_BASE + 'holiday/getList/'
 
 export default {
     URL_USER_LOGIN,
@@ -50,5 +51,6 @@ export default {
     URL_BUSINESS_REGIST,
     URL_BUSINESS_DELETE,
     URL_SYSTEM_REGIST,
-    URL_SYSTEM_DELETE
+    URL_SYSTEM_DELETE,
+    URL_HOLIDAY_GETLIST
 }

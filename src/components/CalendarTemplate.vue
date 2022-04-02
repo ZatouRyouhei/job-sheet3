@@ -6,7 +6,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, reactive } from 'vue';
+import { defineComponent } from 'vue';
+import { useStore } from '@/store'
 
 export default defineComponent({
     props: {
@@ -14,32 +15,7 @@ export default defineComponent({
         }
     },
     setup() {
-        type holidayType = {
-            year: number,
-            month: number,
-            day: number,
-            name: string
-        }
-        let holiday: holidayType[] = reactive([]);
-
-        /**
-         * 祝日を取得する。
-         */
-        onBeforeMount(() => {
-            holiday  = [
-                {
-                year: 2022,
-                month: 2,
-                day: 23,
-                name: "天皇誕生日"
-                },
-                {
-                year: 2022,
-                month: 2,
-                day: 22,
-                name: "あいうえお"
-            }]
-        })
+        const store = useStore()
 
         type calType = {
             day: number,
@@ -53,12 +29,13 @@ export default defineComponent({
          * 祝日かどうかをチェックする
          */
         const checkHoliday = (date: calType): boolean => {
-            //const result = holiday.some(h => h.year === date.year && h.month === date.month + 1 && h.day === date.day)
             let result = false
-            for (let h of holiday) {
-                if (h.year === date.year && h.month === date.month + 1 && h.day === date.day) {
-                result = true
-                date.name = h.name
+            for (let h of store.state.holidayList) {
+                let hArr: string[] = h.holiday.split('-')
+                if (Number(hArr[0]) === date.year && Number(hArr[1]) === date.month + 1 && Number(hArr[2]) === date.day) {
+                    result = true
+                    date.name = h.name
+                    break;
                 }
             }
             return result
@@ -87,12 +64,12 @@ export default defineComponent({
 
 <style scoped>
 .holiday {
-  color: red;
+  color: #F59E0B;
 }
 .sunDay {
-  color: red;
+  color: #EF4444;
 }
 .satDay {
-  color: blue;
+  color: #3B82F6;
 }
 </style>

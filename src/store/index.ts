@@ -1,11 +1,12 @@
 import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { UserType } from '@/constantType'
+import { UserType, HolidayType } from '@/constantType'
 
 // ストアのステートに対して型を定義します
 export interface State {
-  user: UserType
+  user: UserType,
+  holidayList: HolidayType[]
 }
 
 // インジェクションキーを定義します
@@ -18,7 +19,8 @@ export default createStore<State>({
       password: '',
       name: '',
       seqNo: 0
-    }
+    },
+    holidayList: []
   },
   getters: {
     isAuth(state): boolean {
@@ -28,6 +30,9 @@ export default createStore<State>({
   mutations: {
     setUser(state, payload) {
       state.user = payload
+    },
+    setHolidayList(state, payload) {
+      state.holidayList = payload
     }
   },
   actions: {

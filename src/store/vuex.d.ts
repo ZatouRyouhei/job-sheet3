@@ -1,11 +1,12 @@
 import { ComponentCustomProperties } from 'vue'
 import { Store } from 'vuex'
-import { UserType } from '@/constantType'
+import { UserType, HolidayType } from '@/constantType'
 
 declare module '@vue/runtime-core' {
   // ストアのステートを宣言する
   interface State {
-    user: UserType
+    user: UserType,
+    holidayList: HolidayType[]
   }
 
   // `this.$store` の型付けを提供する
