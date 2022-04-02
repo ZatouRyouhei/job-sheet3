@@ -42,7 +42,7 @@
 				<label id="contact-label" for="contact" class="required">窓口</label>
 				<p-dropdown id="contact" :options="contactList" optionLabel="name" optionValue="id" :showClear="true"
 										v-model="v$.contact.$model" :class="{'p-invalid':v$.contact.$invalid && submitted}"/>
-				<label id="title-label" for="title" class="required">タイトル</label>
+				<label id="title-label" for="title" class="required">タイトル（{{v$.title.maxLength.$params.max}}文字まで）</label>
 				<p-input-text id="title" type="text" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted}" />
 				<label id="content-label" for="content" class="required">内容 （{{v$.content.maxLength.$params.max}}文字まで。現在{{state.content.length}}文字）</label>
 				<p-textarea id="content" rows="6" cols="30" v-model="v$.content.$model" :class="{'p-invalid':v$.content.$invalid && submitted}" />
