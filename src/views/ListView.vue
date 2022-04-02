@@ -15,11 +15,16 @@
       class="p-datatable-sm"
       :rowStyle="{cursor: 'default'}"
       :virtualScrollerOptions="{ itemSize: 30 }">
+      <!-- 仮想スクロールを使う場合、テーブルの行の高さが一定である必要があるようだ。
+      項目内での改行や、ボタンの配置で行の高さが高くなったりすると、スクロールの途中でヘッダーが消えてしまう。
+      prime vueのバグ？
+      -->
       <p-toolbar>
         <template #start>
           <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
           <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
           <p-button icon="pi pi-download" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
+          <span style="margin-left: 50px;">{{searchList.length}}件</span>
         </template>
         <template #end>
           <div style="text-align:right">
@@ -33,7 +38,7 @@
           </div>
         </template>
       </p-toolbar>
-      <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}"></p-column>
+      <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}" frozen alignFrozen="left"></p-column>
       <p-column v-if="fieldContains('status')" header="ステータス" :style="{width:'100px'}">
         <template #body="{data}">
           <p-tag v-if="getStatus(data) === 'success'" class="mr-2" value="完了" severity="success" icon="pi pi-check"></p-tag>
@@ -79,9 +84,19 @@
       <p-column v-if="fieldContains('responseTime')" field="responseTime" header="対応時間" :style="{width:'80px'}"></p-column>
       <p-column v-if="fieldContains('attachment')" header="添付" :style="{width:'50px'}">
         <template #body="{data}">
-          <i v-if="data.fileList.length > 0" class="pi pi-paperclip"></i>
+          <i v-if="data.fileList.length > 0" class="pi pi-paperclip" v-tooltip="String(data.fileList.length) + 'コ'"></i>
         </template>
       </p-column>
+      <!--アイコンだけ表示する場合-->
+      <!--
+      <p-column :style="{width:'80px', padding: '0'}" frozen alignFrozen="right">
+          <div class="edit-icon-area" @click="editJobSheet(data)" v-tooltip="'編集'">
+            <i class="pi pi-pencil edit-icon"></i>
+          </div>
+        </template>
+      </p-column>
+      -->
+      <!--ボタンを表示する場合-->
       <p-column :style="{width:'80px'}" frozen alignFrozen="right">
         <template #body="{data}">
           <p-button icon="pi pi-pencil" v-tooltip="'編集'" class="p-button-rounded p-button-info p-button-sm" @click="editJobSheet(data)" />
@@ -444,6 +459,24 @@
 
 .p-dropdown {
 	width: 200px;
+}
+
+.edit-icon-area {
+  width:100%;
+  height:100%;
+  cursor: pointer;
+}
+.edit-icon-area:hover {
+  background-color: #EEF2FF;
+}
+
+.edit-icon {
+  color: #4338CA;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
 .search {
