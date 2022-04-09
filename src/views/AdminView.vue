@@ -19,6 +19,7 @@
                 {label: '顧客テーブル', icon: 'pi pi-building', to: '/about/admin/client'},
                 {label: '業務テーブル', icon: 'pi pi-briefcase', to: '/about/admin/business'},
                 {label: 'システムテーブル', icon: 'pi pi-server', to: '/about/admin/system'},
+                {label: '祝日テーブル', icon: 'pi pi-calendar', to: '/about/admin/holiday'},
                 {label: '順序変更', icon: 'pi pi-sort-alt', to: '/about/admin/userSeq'},
                 {label: '集計', icon: 'pi pi-chart-bar', to: '/about/admin/stats'}
             ])

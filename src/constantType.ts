@@ -164,3 +164,8 @@ export type HolidayType = {
     holiday: string
     name: string
 }
+
+export type ErrorMsgType = {
+    lineNo: number
+    errorMsg: string
+}

@@ -50,6 +50,11 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../views/SystemView.vue')
           },
           {
+            path: 'holiday',
+            name: 'holiday',
+            component: () => import('../views/HolidayView.vue')
+          },
+          {
             path: 'userSeq',
             name: 'userSeq',
             component: () => import('../views/UserSeqView.vue')
