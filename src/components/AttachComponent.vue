@@ -30,7 +30,7 @@
 
 <script lang="ts">
 	import { defineComponent, onMounted, ref, reactive, PropType } from 'vue';
-	import { ClientType, BusinessType, SystemType, InquiryType, UserType, SearchConditionType, JobSheetType, JobSheetFormType, AttachmentType } from '@/constantType'
+	import { JobSheetType, AttachmentType } from '@/constantType'
 	import axios from 'axios'
 	import Constant from '@/constant'
 	import { useToast } from "primevue/usetoast";
