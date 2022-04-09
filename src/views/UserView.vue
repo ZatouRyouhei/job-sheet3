@@ -3,9 +3,10 @@
         <p-data-table id="user-table"
             :value="userList"
             :scrollable="true"
+            scrollDirection="both"
             showGridlines
             stripedRows
-            scrollHeight="600px"
+            scrollHeight="calc(100vh - 300px)"
             @rowSelect="onRowSelect"
             selectionMode="single"
             dataKey="id"
@@ -228,19 +229,21 @@
 <style scoped>
 .user {
 	display: grid;
-	grid-template-columns: 10px 600px 600px auto;
-	column-gap: 100px;
-	grid-template-rows: 50px 600px ;
+	grid-template-columns: 40% 60%;
+	column-gap: 30px;
+	grid-template-rows: 600px ;
+    margin-top: 50px;
+    margin-left: 50px;
 }
 #user-table {
-    grid-column: 2 / 3;
-	grid-row: 2 / 3;
+    grid-column: 1 / 2;
+	grid-row: 1 / 2;
 	justify-self: start;
 	align-self: start;
 }
 .edit-form {
-    grid-column: 3 / 4;
-	grid-row: 2 / 3;
+    grid-column: 2 / 3;
+	grid-row: 1 / 2;
 	justify-self: start;
 	align-self: start;
 

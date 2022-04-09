@@ -3,15 +3,16 @@
         <p-data-table id="client-table"
             :value="clientList"
             :scrollable="true"
+            scrollDirection="both"
             showGridlines
             stripedRows
-            scrollHeight="600px"
+            scrollHeight="calc(100vh - 300px)"
             @rowSelect="onRowSelect"
             selectionMode="single"
             dataKey="id"
             v-model:selection="selectedClient"
             class="p-datatable-sm">
-            <p-column field="id" header="ID" :style="{width:'300px'}"></p-column>
+            <p-column field="id" header="ID" :style="{width:'50px'}"></p-column>
             <p-column field="name" header="顧客名" :style="{width:'300px'}"></p-column>
         </p-data-table>
 
@@ -187,19 +188,21 @@
 <style scoped>
 .client {
 	display: grid;
-	grid-template-columns: 10px 600px 600px auto;
-	column-gap: 100px;
-	grid-template-rows: 50px 600px ;
+	grid-template-columns: 40% 50%;
+	column-gap: 30px;
+	grid-template-rows: 600px ;
+    margin-top: 50px;
+    margin-left: 50px;
 }
 #client-table {
-    grid-column: 2 / 3;
-	grid-row: 2 / 3;
+    grid-column: 1 / 2;
+	grid-row: 1 / 2;
 	justify-self: start;
 	align-self: start;
 }
 .edit-form {
-    grid-column: 3 / 4;
-	grid-row: 2 / 3;
+    grid-column: 2 / 3;
+	grid-row: 1 / 2;
 	justify-self: start;
 	align-self: start;
 
