@@ -7,24 +7,28 @@
       scrollDirection="both"
       showGridlines
       stripedRows
-      scrollHeight="calc(100vh - 100px)"
+      scrollHeight="calc(100vh - 180px)"
       :loading="loading"
       selectionMode="single"
       dataKey="id"
       v-model:selection="selectedData"
       class="p-datatable-sm"
       :rowStyle="{cursor: 'default'}"
-      :virtualScrollerOptions="{ itemSize: 30 }">
+      :paginator="true"
+      :rows="100"
+      paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+      :rowsPerPageOptions="[10,50,100]"
+      currentPageReportTemplate="{totalRecords}件中 {first}～{last}件">
       <!-- 仮想スクロールを使う場合、テーブルの行の高さが一定である必要があるようだ。
       項目内での改行や、ボタンの配置で行の高さが高くなったりすると、スクロールの途中でヘッダーが消えてしまう。
       prime vueのバグ？
+      今回は仮想スクロールは使わなかった。
       -->
       <p-toolbar>
         <template #start>
           <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
           <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
           <p-button icon="pi pi-download" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
-          <span style="margin-left: 50px;">{{searchList.length}}件</span>
         </template>
         <template #end>
           <div style="text-align:right">
