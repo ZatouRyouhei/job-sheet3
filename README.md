@@ -38,7 +38,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```
 npm run build
 ```
-実行後にjob-sheet/distが生成されます。  
-C:\inetpub\wwwrootに、job-sheetフォルダを作成し、  
+実行後にjob-sheet3/distが生成されます。  
+C:\inetpub\wwwrootに、job-sheet3フォルダを作成し、  
 distフォルダの中身をコピーアンドペーストしてください。
 
