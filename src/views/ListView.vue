@@ -101,16 +101,22 @@
       </p-column>
       -->
       <!--ボタンを表示する場合-->
-      <p-column :style="{width:'80px'}" frozen alignFrozen="right">
+      <p-column :style="{width:'70px'}" frozen alignFrozen="right">
         <template #body="{data}">
           <p-button icon="pi pi-pencil" v-tooltip="'編集'" class="p-button-rounded p-button-info p-button-sm" @click="editJobSheet(data)" />
+        </template>
+      </p-column>
+      <!-- コピーボタン -->
+      <p-column :style="{width:'70px'}" frozen alignFrozen="right">
+        <template #body="{data}">
+          <p-button icon="pi pi-copy" v-tooltip="'コピー'" class="p-button-rounded p-button-warning p-button-sm" @click="copyJobSheet(data)" />
         </template>
       </p-column>
     </p-data-table>
 
     <!-- 業務日誌編集ダイアログ -->
     <p-dialog position="left" :header="header" v-model:visible="jobSheetDialog" :modal="true">
-        <edit-component v-bind:targetId="editId" v-on:doemit="search" v-on:closeDialog="closeJobSheetDialog"/>
+        <edit-component v-bind:targetId="editId" v-bind:argNewFlg="newFlg" v-on:doemit="search" v-on:closeDialog="closeJobSheetDialog"/>
     </p-dialog>
 
     <!-- 検索部分を別のコンポーネントにしたかったが、ダイアログを閉じると入力していた検索条件が消えてしまう。
@@ -284,20 +290,30 @@
         return "あと" + termDate + "日"
       }
 
+      const jobSheetDialog = ref(false)
       const editId = ref('')
+      const newFlg = ref(false)  // 新規フラグ 新規登録するときにtrueにする。
       const header = ref('')
       // 業務日誌新規作成ボタンを押された時、新規作成ダイアログを開く
       const newJobSheet = () => {
         jobSheetDialog.value = true
         editId.value = ''
+        newFlg.value = true
         header.value = '新規登録'
       }
       // 業務日誌編集ボタンを押された時、編集ダイアログを開く
-      const jobSheetDialog = ref(false)
       const editJobSheet = (data: JobSheetType) => {
         jobSheetDialog.value = true
         editId.value = data.id
+        newFlg.value = false
         header.value = '編集'
+      }
+      // 業務日誌コピーボタンを押された時、新規作成ダイアログを開く
+      const copyJobSheet = (data: JobSheetType) => {
+        jobSheetDialog.value = true
+        editId.value = data.id
+        newFlg.value = true
+        header.value = '新規登録'
       }
       // 検索ボタンを押された時、検索ダイアログを開く
       const searchDialog = ref(false)
@@ -443,10 +459,10 @@
       })
 
       return {searchList, loading, columns, selectedColumns, jobSheetDialog,
-        editId, header, searchDialog, searchCondition,
+        editId, newFlg, header, searchDialog, searchCondition,
         client, clientList, business, businessList, system, systemList, inquiry, inquiryList,
 				contact, contactList, deal, dealList, occurDate, limitDate, keyword, stateSelect, stateOptions, searchLoading, excelDownloading, selectedData,
-        search, formatDate, onToggle, fieldContains, getStatus, editJobSheet, newJobSheet, searchJobSheet, changeBusiness, jobSheetSearch,
+        search, formatDate, onToggle, fieldContains, getStatus, editJobSheet, copyJobSheet, newJobSheet, searchJobSheet, changeBusiness, jobSheetSearch,
         closeJobSheetDialog, getWarningMsg, downloadExcel}
     }
   })

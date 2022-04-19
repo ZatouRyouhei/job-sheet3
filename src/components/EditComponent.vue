@@ -110,6 +110,10 @@
 			targetId: {
 				type: String,
 				required: true
+			},
+			argNewFlg: {
+				type: Boolean,
+				required: true
 			}
 		},
 		components: {
@@ -339,44 +343,48 @@
 					dealList.value = res.data
 				})
 
-				// パラメータで受け取ったIDでデータを取得し、入力欄にセットする。
-				axios.get<JobSheetType>(Constant.URL_JOBSHEET_GET + props.targetId).then((res) => {
-					state.client = res.data.client.id
-					state.business = res.data.businessSystem.business.id
-					state.system = res.data.businessSystem.id
-					state.inquiry = res.data.inquiry.id
-					state.department = res.data.department
-					state.person = res.data.person
-					const occurDateTime = DateUtil.strToDateTime(res.data.occurDate, res.data.occurTime)
-					state.occurDate = occurDateTime
-					state.occurTime = occurDateTime
-					state.contact = res.data.contact.id
-					state.title = res.data.title
-					state.content = res.data.content
-					state.limitDate = res.data.limitDate ? DateUtil.strToDate(res.data.limitDate) : ''
-					state.support = res.data.support
-					state.deal = res.data.deal.id
-					state.completeDate = res.data.completeDate ? DateUtil.strToDate(res.data.completeDate) : ''
-					state.responseTime = res.data.responseTime
+				// 編集もしくはコピーの時は、パラメータで受け取ったIDでデータを取得し、入力欄にセットする。
+				if (props.targetId) {
+					axios.get<JobSheetType>(Constant.URL_JOBSHEET_GET + props.targetId).then((res) => {
+						state.client = res.data.client.id
+						state.business = res.data.businessSystem.business.id
+						state.system = res.data.businessSystem.id
+						state.inquiry = res.data.inquiry.id
+						state.department = res.data.department
+						state.person = res.data.person
+						const occurDateTime = DateUtil.strToDateTime(res.data.occurDate, res.data.occurTime)
+						state.occurDate = occurDateTime
+						state.occurTime = occurDateTime
+						state.contact = res.data.contact.id
+						state.title = res.data.title
+						state.content = res.data.content
+						state.limitDate = res.data.limitDate ? DateUtil.strToDate(res.data.limitDate) : ''
+						state.support = res.data.support  // 対応詳細
+						state.deal = res.data.deal.id  // 対応者
+						state.completeDate = res.data.completeDate ? DateUtil.strToDate(res.data.completeDate) : ''  // 完了日
+						state.responseTime = res.data.responseTime  // 対応時間
 
-					// システムプルダウンを生成する
-					axios.get<SystemType[]>(Constant.URL_SYSTEM_GETLIST + state.business).then((res) => {
-						systemList.value = res.data
+						// システムプルダウンを生成する
+						axios.get<SystemType[]>(Constant.URL_SYSTEM_GETLIST + state.business).then((res) => {
+							systemList.value = res.data
+						})
+
+						// 編集のときだけセットする。コピーの時はセットしない。
+						if (!props.argNewFlg) {
+							// ステータスをセット
+							setStatus(res.data.limitDate, res.data.completeDate)
+							// 添付ファイルの数をセット
+							files.value = String(res.data.fileList.length)
+						}
 					})
+				}
 
-					// ステータスをセット
-					setStatus(res.data.limitDate, res.data.completeDate)
+				// 編集の時は、パラメータのIDを更新用IDに入れておく
+				if (!props.argNewFlg) {
+					registId.value = props.targetId
+				}
 
-					// 添付ファイルの数をセット
-					files.value = String(res.data.fileList.length)
-					
-				})
-
-				// パラメータのIDを更新用IDに入れておく
-				registId.value = props.targetId
-
-				// 新規登録のときは新規フラグをtrueにする
-				newFlg.value = props.targetId ? false : true
+				newFlg.value = props.argNewFlg
 			})
 
 			// 業務プルダウンを選択したときに、自動的にシステムプルダウンを生成する。
