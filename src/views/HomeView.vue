@@ -86,7 +86,12 @@ export default defineComponent({
           titlelogoDisplay.value = false
           store.commit("setUser", res.data)
           // 祝日テーブルを取得
-          axios.get<HolidayType[]>(Constant.URL_HOLIDAY_GETLIST).then((h) => {
+          axios.get<HolidayType[]>(Constant.URL_HOLIDAY_GETLIST, {
+            auth: {
+              username: store.state.user.id,
+              password: store.state.user.password
+            }
+          }).then((h) => {
             store.commit('setHolidayList', h.data)
           })
           // トップページへ遷移

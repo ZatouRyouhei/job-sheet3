@@ -31,7 +31,7 @@
 <script lang="ts">
 	import { defineComponent, onMounted, ref, reactive, PropType } from 'vue';
 	import { JobSheetType, AttachmentType } from '@/constantType'
-	import axios from 'axios'
+	import axios from '@/axios'
 	import Constant from '@/constant'
 	import { useToast } from "primevue/usetoast";
 	import { useConfirm } from "primevue/useconfirm";
@@ -91,7 +91,6 @@
 
 			// ダウンロード処理
 			const downloadFile = (file: AttachmentType) => {
-				console.log('download')
 				downloading[file.seqNo] = true
 				axios.get(Constant.URL_ATTACHMENT_DOWNLOAD + props.editJobSheetId + "/" + file.seqNo, {
 					responseType:'blob'

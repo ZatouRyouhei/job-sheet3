@@ -16,7 +16,7 @@
 
 <script lang="ts">
     import { defineComponent, onMounted, ref, PropType } from 'vue';
-    import axios from 'axios'
+    import axios from '@/axios'
     import Constant from '@/constant'
     import { BusinessType } from '@/constantType'
 

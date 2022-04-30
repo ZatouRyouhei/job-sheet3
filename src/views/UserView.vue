@@ -36,7 +36,7 @@
 <script lang="ts">
     import { defineComponent, onMounted, ref, reactive } from 'vue';
     import { UserType } from '@/constantType'
-    import axios from 'axios'
+    import axios from '@/axios'
     import Constant from '@/constant'
     import { required, maxLength, alphaNum } from "@vuelidate/validators";
     import { useVuelidate } from "@vuelidate/core";

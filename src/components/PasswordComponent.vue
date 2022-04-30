@@ -21,7 +21,7 @@
     import { required, maxLength } from "@vuelidate/validators";
     import { useVuelidate } from "@vuelidate/core";
     import Constant from '@/constant'
-    import axios from 'axios'
+    import axios from '@/axios'
     import { useToast } from "primevue/usetoast";
     import { useStore } from '@/store'
     import { UserType } from '@/constantType'
@@ -88,6 +88,7 @@
                                     seqNo: 0
                                 }
                                 axios.post(Constant.URL_USER_CHANGEPASSWORD, editUserObj).then(() => {
+                                    store.commit("setPassword", state.newPassword)
                                     addSuccessToast()
                                 }).catch(() => {
                                     addErrorToast('登録できませんでした。')

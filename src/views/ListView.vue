@@ -162,7 +162,7 @@
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   import Constant from '@/constant'
-  import axios from 'axios'
+  import axios from '@/axios'
   import { ClientType, BusinessType, SystemType, InquiryType, UserType, JobSheetType, SearchConditionType } from '@/constantType'
   import DateUtil from '@/DateUtil'
   import EditComponent from '@/components/EditComponent.vue'

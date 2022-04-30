@@ -49,7 +49,7 @@
 	import { defineComponent, onMounted, ref, PropType } from 'vue';
 	import { ClientType, BusinessType, SystemType, InquiryType, UserType, SearchConditionType, JobSheetType, AttachmentType } from '@/constantType'
 	import Constant from '@/constant'
-	import axios from 'axios'
+	import axios from '@/axios'
 	import { useStore } from '@/store'
 	import DateUtil from '@/DateUtil'
 

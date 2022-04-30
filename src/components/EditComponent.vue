@@ -95,7 +95,7 @@
 <script lang="ts">
 	import { defineComponent, onMounted, ref, reactive} from 'vue';
 	import { ClientType, BusinessType, SystemType, InquiryType, UserType, JobSheetType, JobSheetFormType } from '@/constantType'
-	import axios from 'axios'
+	import axios from '@/axios'
 	import Constant from '@/constant'
 	import { required, maxLength } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";

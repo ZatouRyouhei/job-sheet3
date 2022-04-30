@@ -25,7 +25,7 @@
 <script lang="ts">
     import { defineComponent, onMounted, ref } from 'vue';
     import { UserType } from '@/constantType'
-    import axios from 'axios'
+    import axios from '@/axios'
     import Constant from '@/constant'
     import draggable from 'vuedraggable'
     import { useToast } from "primevue/usetoast";

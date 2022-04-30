@@ -25,11 +25,17 @@ export default createStore<State>({
   getters: {
     isAuth(state): boolean {
       return state.user.id.length > 0
+    },
+    getUser(state): UserType {
+      return state.user
     }
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload
+    },
+    setPassword(state, payload) {
+      state.user.password = payload
     },
     setHolidayList(state, payload) {
       state.holidayList = payload

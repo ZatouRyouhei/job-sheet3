@@ -30,7 +30,7 @@
 import { defineComponent, ref} from 'vue';
 import { ErrorMsgType } from '@/constantType'
 import Constant from '@/constant'
-import axios from 'axios'
+import axios from '@/axios'
 import { useToast } from "primevue/usetoast";
 
 export default defineComponent({

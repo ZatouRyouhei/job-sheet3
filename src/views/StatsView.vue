@@ -88,7 +88,7 @@
 <script lang="ts">
     import { defineComponent, onMounted, ref } from 'vue';
     import { JobSheetStatsType, BusinessType} from '@/constantType'
-    import axios from 'axios'
+    import axios from '@/axios'
     import Constant from '@/constant'
     import ChartComponent from '@/components/ChartComponent.vue'
 
