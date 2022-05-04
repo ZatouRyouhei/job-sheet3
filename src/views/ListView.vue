@@ -7,7 +7,7 @@
       scrollDirection="both"
       showGridlines
       stripedRows
-      scrollHeight="calc(100vh - 180px)"
+      scrollHeight="calc(100vh - 75px)"
       :loading="loading"
       selectionMode="single"
       dataKey="id"
@@ -17,6 +17,7 @@
       :paginator="true"
       :rows="100"
       paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+      paginatorPosition="top"
       :rowsPerPageOptions="[10,50,100]"
       currentPageReportTemplate="{totalRecords}件中 {first}～{last}件">
       <!-- 仮想スクロールを使う場合、テーブルの行の高さが一定である必要があるようだ。
@@ -24,24 +25,22 @@
       prime vueのバグ？
       今回は仮想スクロールは使わなかった。
       -->
-      <p-toolbar>
-        <template #start>
-          <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
-          <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
-          <p-button icon="pi pi-download" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
-        </template>
-        <template #end>
-          <div style="text-align:right">
-            <p-multi-select id="col-select"
-              :modelValue="selectedColumns"
-              :options="columns"
-              optionLabel="header"
-              @update:modelValue="onToggle"
-              placeholder="表示列を選択"
-              style="width: 20em"/>
-          </div>
-        </template>
-      </p-toolbar>
+      <template #paginatorstart>
+        <p-button id="new-button" icon="pi pi-plus" v-tooltip="'新規作成'" class="p-button-info p-button-sm" @click="newJobSheet()" />
+        <p-button id="search-button" icon="pi pi-search" v-tooltip="'検索'" class="p-button-info p-button-sm" @click="searchJobSheet()" />
+        <p-button icon="pi pi-download" v-tooltip="'台帳出力'" class="p-button-success p-button-sm" :loading="excelDownloading" @click="downloadExcel"/>
+      </template>
+      <template #paginatorend>
+        <div style="text-align:right">
+          <p-multi-select id="col-select"
+            :modelValue="selectedColumns"
+            :options="columns"
+            optionLabel="header"
+            @update:modelValue="onToggle"
+            placeholder="表示列を選択"
+            style="width: 20em"/>
+        </div>
+      </template>
       <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}" frozen alignFrozen="left"></p-column>
       <p-column v-if="fieldContains('status')" header="ステータス" :style="{width:'100px'}">
         <template #body="{data}">
