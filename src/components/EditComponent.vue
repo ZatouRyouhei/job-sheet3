@@ -10,6 +10,7 @@
 						<p-tag v-else-if="jobStatus === 'warning'" :value="termDateMsg" severity="warning" icon="pi pi-info-circle"></p-tag>
 					</span>
 				</transition>
+				<p-progress-spinner style="width:50px; height:50px" strokeWidth="4" id="initSpinner" v-show="initFlg"/>
 				<label id="client-label" for="client" class="required">顧客</label>
 				<p-dropdown id="client" :options="clientList" optionLabel="name" optionValue="id" :showClear="true"
 										v-model="v$.client.$model" :class="{'p-invalid':v$.client.$invalid && submitted}"/>
@@ -324,6 +325,7 @@
 			const files = ref('0')
 
 			// 初期処理
+			const initFlg = ref(false)
 			onMounted(() => {
 				// 顧客名リスト取得
 				axios.get<ClientType[]>(Constant.URL_CLIENT_GETLIST).then((res) => {
@@ -345,6 +347,7 @@
 
 				// 編集もしくはコピーの時は、パラメータで受け取ったIDでデータを取得し、入力欄にセットする。
 				if (props.targetId) {
+					initFlg.value = true
 					axios.get<JobSheetType>(Constant.URL_JOBSHEET_GET + props.targetId).then((res) => {
 						state.client = res.data.client.id
 						state.business = res.data.businessSystem.business.id
@@ -376,6 +379,8 @@
 							// 添付ファイルの数をセット
 							files.value = String(res.data.fileList.length)
 						}
+					}).finally(() => {
+						initFlg.value = false
 					})
 				}
 
@@ -446,7 +451,7 @@
 			}
 
 			return {state, rules, v$, submitted, loading, clientList, businessList, systemList, inquiryList, contactList, dealList, fileDownloadDialog,
-					delLoading, registId, headerFlg, newFlg, jobStatus, files, termDateMsg,
+					delLoading, registId, headerFlg, newFlg, jobStatus, files, termDateMsg, initFlg,
 					handleSubmit, changeBusiness, delConfirm, downloadFile, selectMyself, resetFileNo}
 		}
 	})
@@ -480,6 +485,12 @@
 	align-self: start;
 	font-weight: bold;
 	font-size: 120%;
+}
+#initSpinner {
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	justify-self: center;
+	align-self: start;
 }
 #client-label {
 	grid-column: 1 / 2;
