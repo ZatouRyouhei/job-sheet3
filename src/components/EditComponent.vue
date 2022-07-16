@@ -76,10 +76,10 @@
 										incrementButtonClass="p-button-secondary" decrementButtonClass="p-button-secondary" mode="decimal" :min="0"
 										v-model="v$.responseTime.$model" :class="{'p-invalid':v$.responseTime.$invalid && submitted}" style="width: 230px; height: 50px;"/>
 				</span>
-				<p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 150px;"/>
+				<p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 100px;"/>
 				<!-- 新規登録時は非表示にする -->
-				<p-button v-show="!newFlg" id="attach-btn" icon="pi pi-paperclip" v-tooltip="'添付ファイル'" :badge="files" class="p-button-info p-button-sm" v-on:click="downloadFile" />
-				<p-button v-show="!newFlg" id="delete-btn" v-on:click="delConfirm($event)" label="削除" icon="pi pi-trash" class="p-button-danger p-button-outlined" :loading="delLoading" style="width: 150px;"/>
+				<p-button v-show="!newFlg" id="attach-btn" label="添付" v-tooltip="'添付ファイルのアップロード、ダウンロードダイアログを開きます'" :badge="files" style="width: 100px;" v-on:click="downloadFile" />
+				<p-button v-show="!newFlg" id="delete-btn" v-on:click="delConfirm($event)" label="削除" icon="pi pi-trash" class="p-button-danger p-button-outlined" :loading="delLoading" style="width: 100px;"/>
 				<p-confirm-popup></p-confirm-popup>
 			</div>
 		</form>
@@ -705,13 +705,13 @@
 #submit-btn {
 	grid-column: 2 / 3;
 	grid-row: 7 / 8;
-	justify-self: start;
+	justify-self: end;
 	align-self: end;
 }
 #attach-btn {
-	grid-column: 2 / 3;
+	grid-column: 3 / 4;
 	grid-row: 7 / 8;
-	justify-self: end;
+	justify-self: start;
 	align-self: end;
 }
 #delete-btn {

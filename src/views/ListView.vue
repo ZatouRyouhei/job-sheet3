@@ -42,6 +42,11 @@
         </div>
       </template>
       <p-column v-if="fieldContains('id')" field="id" header="番号" :style="{width:'100px'}" frozen alignFrozen="left"></p-column>
+      <p-column v-if="fieldContains('attachment')" header="添付" :style="{width:'50px'}">
+        <template #body="{data}">
+          <p-badge v-if="data.fileList.length > 0" :value="data.fileList.length"></p-badge>
+        </template>
+      </p-column>
       <p-column v-if="fieldContains('status')" header="ステータス" :style="{width:'100px'}">
         <template #body="{data}">
           <p-tag v-if="getStatus(data) === 'success'" class="mr-2" value="完了" severity="success" icon="pi pi-check"></p-tag>
@@ -85,11 +90,6 @@
         </template>
       </p-column>
       <p-column v-if="fieldContains('responseTime')" field="responseTime" header="対応時間" :style="{width:'80px'}"></p-column>
-      <p-column v-if="fieldContains('attachment')" header="添付" :style="{width:'50px'}">
-        <template #body="{data}">
-          <i v-if="data.fileList.length > 0" class="pi pi-paperclip" v-tooltip="String(data.fileList.length) + 'コ'"></i>
-        </template>
-      </p-column>
       <!--アイコンだけ表示する場合-->
       <!--
       <p-column :style="{width:'80px', padding: '0'}" frozen alignFrozen="right">
@@ -209,6 +209,7 @@
       // 表示列の制御
       const columns = ref([
           {field: 'id', header: '番号'},
+          {field: 'attachment', header: '添付'},
           {field: 'status', header: 'ステータス'},
           {field: 'client', header: '顧客'},
           {field: 'business', header: '業務'},
@@ -225,8 +226,7 @@
           {field: 'support', header: '対応詳細'},
           {field: 'deal', header: '対応者'},
           {field: 'completeDate', header: '完了日'},
-          {field: 'responseTime', header: '対応時間'},
-          {field: 'attachment', header: '添付'}
+          {field: 'responseTime', header: '対応時間'}
       ]);
       // デフォルトはすべての列を表示する。
       let selectedColumns = ref(columns.value);
