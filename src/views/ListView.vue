@@ -148,7 +148,7 @@
             </p-calendar>
           </span>
           <label id="keyword-label" for="keyword">キーワード</label>
-          <p-input-text id="keyword" type="text" v-model="keyword" style="width: 400px;" />
+          <p-input-text id="keyword" type="text" v-model="keyword" style="width: 400px;" v-tooltip.bottom.focus="'キーワードを複数指定する場合は、半角スペースもしくは全角スペースで区切ってください。'"/>
           <p-select-button id="state-id" v-model="stateSelect" :options="stateOptions" optionLabel="name" multiple/>
           <p-button id="search-id" label="検索" icon="pi pi-search" class="p-button-info" :loading="searchLoading" v-on:click="jobSheetSearch"/>
         </div>
