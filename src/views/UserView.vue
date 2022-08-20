@@ -42,6 +42,7 @@
     import { useVuelidate } from "@vuelidate/core";
     import { useToast } from "primevue/usetoast";
     import { useConfirm } from "primevue/useconfirm";
+    import sha512 from 'js-sha512'
 
     export default defineComponent({
         setup() {
@@ -93,8 +94,8 @@
                 } else {
                     // 入力エラーがない場合
                     loading.value = true
-                    // 登録するパスワード 新規登録のときは初期パスワード111111を設定する。
-                    let regPassword = '11111'
+                    // 登録するパスワード 新規登録のときは初期パスワード11111を設定する。
+                    let regPassword = sha512.sha512('11111')
                     if (disabled.value) {  // 更新のときはパスワードは変更しない
                         regPassword = ''
                     }
@@ -180,7 +181,7 @@
                         const userObj: UserType = {
                             id: selectedUser.value.id,
                             name: selectedUser.value.name,
-                            password: '11111',
+                            password: sha512.sha512('11111'),
                             seqNo: 0
                         }
                         axios.post(Constant.URL_USER_REGIST, userObj).then(() => {

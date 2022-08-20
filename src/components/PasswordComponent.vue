@@ -25,6 +25,7 @@
     import { useToast } from "primevue/usetoast";
     import { useStore } from '@/store'
     import { UserType } from '@/constantType'
+    import sha512 from 'js-sha512'
 
     export default defineComponent({
         setup() {
@@ -72,7 +73,7 @@
                     // 現在のパスワードが正しいことを確認する。
                     const userObj: UserType = {
                         id: store.state.user.id,
-                        password: state.currentPassword,
+                        password: sha512.sha512(state.currentPassword),
                         name: '',
                         seqNo: 0
                     }
@@ -83,12 +84,12 @@
                                 // パスワード更新処理
                                 const editUserObj: UserType = {
                                     id: store.state.user.id,
-                                    password: state.newPassword,
+                                    password: sha512.sha512(state.newPassword),
                                     name: '',
                                     seqNo: 0
                                 }
                                 axios.post(Constant.URL_USER_CHANGEPASSWORD, editUserObj).then(() => {
-                                    store.commit("setPassword", state.newPassword)
+                                    store.commit("setPassword", sha512.sha512(state.newPassword))
                                     addSuccessToast()
                                 }).catch(() => {
                                     addErrorToast('登録できませんでした。')

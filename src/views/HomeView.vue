@@ -34,6 +34,7 @@ import { useStore } from '@/store'
 import { UserType, HolidayType } from '@/constantType'
 import Constant from '@/constant'
 import axios from 'axios'
+import sha512 from 'js-sha512'
 
 export default defineComponent({
   name: 'HomeView',
@@ -76,7 +77,7 @@ export default defineComponent({
       loading.value = true
       const userObj: UserType = {
         id: state.userid,
-        password: state.password,
+        password: sha512.sha512(state.password),
         name: '',
         seqNo: 0
       }
