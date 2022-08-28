@@ -9,6 +9,13 @@
 ```
 const URL_BASE = 'http://localhost:8081/jobsheet/webresources/'
 ```
+
+また、constant.tsにタイムアウト時間が記載されているので、動作要件にあった時間に設定してください。
+一定時間キーボード操作、クリック、マウス移動がされない場合に、自動的にログアウトします。
+```
+const TIMEOUT_SEC = 8 * 60 * 60 * 1000
+```
+
 セットアップのためにはあらかじめ[Node.js](https://nodejs.org/ja/)をインストールしておいてください。  
 
 ## Project setup

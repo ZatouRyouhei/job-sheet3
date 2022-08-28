@@ -14,12 +14,73 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent, onMounted, onUnmounted} from 'vue';
 import MenuComponent from '@/components/MenuComponent.vue'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { UserType } from '@/constantType'
+import Constant from '@/constant'
 
 export default defineComponent({
   components: {
     MenuComponent
+  },
+  setup() {
+    const router = useRouter()
+    const store = useStore()
+    const events = ['keydown', 'mousemove', 'click']
+    let timeoutId : number | undefined
+
+    // 一定時間キーボード操作、クリック、マウス移動がされない場合に、自動的にログアウトします。
+    const logout = () => {
+      // 空のユーザをセットし、ログイン画面に戻る
+      const emptyUser: UserType = {
+          id: '',
+          password: '',
+          name: '',
+          seqNo: 0
+      }
+      store.commit("setUser", emptyUser)
+      router.push("/")
+    }
+
+    const setTimer = () => {
+      timeoutId = setTimeout(logout, Constant.TIMEOUT_SEC)
+      // console.log('setTime')
+    }
+
+    const resetTimer = () => {
+      clearTimeout(timeoutId)
+      setTimer()
+    }
+
+    const setEvents = (func: any) => {
+      let len = events.length
+      while (len--) {
+        window.addEventListener(events[len], func, false)
+      }
+    }
+
+    const delEvents = (func: any) => {
+      let len = events.length
+      while (len--) {
+        window.removeEventListener(events[len], func, false)
+      }
+    }
+
+    // 初期処理
+    onMounted(() => {
+      // 指定された秒数の間、操作がされたなったときに自動的にログアウトする。
+      setTimer()
+      setEvents(resetTimer)
+      // console.log('mouted')
+    })
+
+    // 破棄処理
+    onUnmounted(() => {
+      delEvents(resetTimer)
+      // console.log('unmouted')
+    })
   }
 })
 </script>

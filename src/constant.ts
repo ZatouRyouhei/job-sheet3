@@ -1,4 +1,4 @@
-const URL_BASE = 'http://localhost:8081/jobsheet/webresources/'
+const URL_BASE = 'http://localhost/jobsheet/webresources/'
 const URL_USER_LOGIN = URL_BASE + 'user/login/'
 const URL_USER_GETLIST = URL_BASE + 'user/getList/'
 const URL_USER_REGIST = URL_BASE + 'user/regist/'
@@ -27,6 +27,9 @@ const URL_SYSTEM_DELETE = URL_BASE + 'system/delete/'
 const URL_HOLIDAY_GETLIST = URL_BASE + 'holiday/getList/'
 const URL_HOLIDAY_REGIST = URL_BASE + 'holiday/regist/'
 
+// タイムアウトの秒数（ミリ秒）
+const TIMEOUT_SEC = 8 * 60 * 60 * 1000
+
 export default {
     URL_USER_LOGIN,
     URL_USER_GETLIST,
@@ -54,5 +57,6 @@ export default {
     URL_SYSTEM_REGIST,
     URL_SYSTEM_DELETE,
     URL_HOLIDAY_GETLIST,
-    URL_HOLIDAY_REGIST
+    URL_HOLIDAY_REGIST,
+    TIMEOUT_SEC
 }
