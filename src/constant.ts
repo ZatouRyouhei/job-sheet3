@@ -19,6 +19,7 @@ const URL_JOBSHEET_GET = URL_BASE + 'jobsheet/get/'
 const URL_JOBSHEET_DELETE = URL_BASE + 'jobsheet/delete/'
 const URL_JOBSHEET_SEARCH = URL_BASE + 'jobsheet/search/'
 const URL_JOBSHEET_DOWNLOAD = URL_BASE + 'jobsheet/download/'
+const URL_JOBSHEET_PDF = URL_BASE + 'jobsheet/pdf/'
 const URL_JOBSHEET_STATS = URL_BASE + 'jobsheet/stats/'
 const URL_BUSINESS_REGIST = URL_BASE + 'business/regist/'
 const URL_BUSINESS_DELETE = URL_BASE + 'business/delete/'
@@ -51,6 +52,7 @@ export default {
     URL_JOBSHEET_DELETE,
     URL_JOBSHEET_SEARCH,
     URL_JOBSHEET_DOWNLOAD,
+    URL_JOBSHEET_PDF,
     URL_JOBSHEET_STATS,
     URL_BUSINESS_REGIST,
     URL_BUSINESS_DELETE,

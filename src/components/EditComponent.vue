@@ -76,10 +76,11 @@
 										incrementButtonClass="p-button-secondary" decrementButtonClass="p-button-secondary" mode="decimal" :min="0"
 										v-model="v$.responseTime.$model" :class="{'p-invalid':v$.responseTime.$invalid && submitted}" style="width: 230px; height: 50px;"/>
 				</span>
-				<p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 100px;"/>
+				<p-button id="submit-btn" type="submit" label="登録" icon="pi pi-pencil" class="p-button-info" :loading="loading" style="width: 110px;"/>
 				<!-- 新規登録時は非表示にする -->
-				<p-button v-show="!newFlg" id="attach-btn" label="添付" v-tooltip="'添付ファイルのアップロード、ダウンロードダイアログを開きます'" :badge="files" style="width: 100px;" v-on:click="downloadFile" />
-				<p-button v-show="!newFlg" id="delete-btn" v-on:click="delConfirm($event)" label="削除" icon="pi pi-trash" class="p-button-danger p-button-outlined" :loading="delLoading" style="width: 100px;"/>
+				<p-button v-show="!newFlg" id="attach-btn" label="添付" v-tooltip="'添付ファイルのアップロード、ダウンロードダイアログを開きます'" :badge="files" style="width: 110px;" v-on:click="downloadFile" />
+				<p-button v-show="!newFlg" id="pdf-btn" label="印刷" icon="pi pi-file-pdf" v-tooltip="'業務日誌をPDFで出力します'" class="p-button-success" :loading="pdfLoading" v-on:click="downloadPdf" style="width: 110px;"/>
+				<p-button v-show="!newFlg" id="delete-btn" v-on:click="delConfirm($event)" label="削除" icon="pi pi-trash" class="p-button-danger p-button-outlined" :loading="delLoading" style="width: 110px;"/>
 				<p-confirm-popup></p-confirm-popup>
 			</div>
 		</form>
@@ -438,6 +439,23 @@
 				fileDownloadDialog.value = true
 			}
 
+			// PDFをダウンロードする。
+			const pdfLoading = ref(false)
+			const downloadPdf = () => {
+				pdfLoading.value = true
+				axios.get(Constant.URL_JOBSHEET_PDF + registId.value, {
+					responseType:'blob'
+				}).then((res) => {
+					const blob = new Blob([res.data], {
+									type: "application/pdf"
+								});
+					const fileUrl = URL.createObjectURL(blob)
+					window.open(fileUrl)
+				}).finally(() => {
+					pdfLoading.value = false
+				})
+			}
+
 			// 対応者を自分に設定する
 			const selectMyself = () => {
 				state.deal = store.state.user.id
@@ -451,8 +469,8 @@
 			}
 
 			return {state, rules, v$, submitted, loading, clientList, businessList, systemList, inquiryList, contactList, dealList, fileDownloadDialog,
-					delLoading, registId, headerFlg, newFlg, jobStatus, files, termDateMsg, initFlg,
-					handleSubmit, changeBusiness, delConfirm, downloadFile, selectMyself, resetFileNo}
+					delLoading, pdfLoading, registId, headerFlg, newFlg, jobStatus, files, termDateMsg, initFlg,
+					handleSubmit, changeBusiness, delConfirm, downloadFile, downloadPdf, selectMyself, resetFileNo}
 		}
 	})
 </script>
@@ -705,10 +723,16 @@
 #submit-btn {
 	grid-column: 2 / 3;
 	grid-row: 7 / 8;
-	justify-self: end;
+	justify-self: start;
 	align-self: end;
 }
 #attach-btn {
+	grid-column: 2 / 3;
+	grid-row: 7 / 8;
+	justify-self: end;
+	align-self: end;
+}
+#pdf-btn {
 	grid-column: 3 / 4;
 	grid-row: 7 / 8;
 	justify-self: start;
