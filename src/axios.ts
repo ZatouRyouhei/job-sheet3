@@ -18,12 +18,16 @@ import store from '@/store'
 // ヘッダーにセットされない。
 // インターセプタを使用するとよい。
 const axios_instance = axios.create()
-axios_instance.interceptors.request.use(config => {
-    config.auth = {
-        username: store.getters.getUser.id,
-        password: store.getters.getUser.password
-    }
-    return config
-})
+// Basic認証設定
+// axios_instance.interceptors.request.use(config => {
+//     config.auth = {
+//         username: store.getters.getUser.id,
+//         password: store.getters.getUser.password
+//     }
+//     return config
+// })
+// JWT認証設定
+// ヘッダーにJWTを付与する
+axios_instance.defaults.headers.common['Authorization'] = 'Bearer ' + store.state.token;
 
 export default axios_instance

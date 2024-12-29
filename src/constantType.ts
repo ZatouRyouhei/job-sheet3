@@ -5,6 +5,11 @@ export type UserType = {
     seqNo: number
 }
 
+export type LoginUserType = {
+    user: UserType
+    token: string
+}
+
 export type ClientType = {
     id: number
     name: string

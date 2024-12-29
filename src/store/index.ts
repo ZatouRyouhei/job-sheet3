@@ -6,7 +6,8 @@ import { UserType, HolidayType } from '@/constantType'
 // ストアのステートに対して型を定義します
 export interface State {
   user: UserType,
-  holidayList: HolidayType[]
+  holidayList: HolidayType[],
+  token: string,
 }
 
 // インジェクションキーを定義します
@@ -20,7 +21,8 @@ export default createStore<State>({
       name: '',
       seqNo: 0
     },
-    holidayList: []
+    holidayList: [],
+    token: '',
   },
   getters: {
     isAuth(state): boolean {
@@ -28,7 +30,7 @@ export default createStore<State>({
     },
     getUser(state): UserType {
       return state.user
-    }
+    },
   },
   mutations: {
     setUser(state, payload) {
@@ -39,7 +41,10 @@ export default createStore<State>({
     },
     setHolidayList(state, payload) {
       state.holidayList = payload
-    }
+    },
+    setToken(state, payload) {
+      state.token = payload
+    },
   },
   actions: {
   },

@@ -31,7 +31,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
-import { UserType, HolidayType } from '@/constantType'
+import { UserType, LoginUserType, HolidayType } from '@/constantType'
 import Constant from '@/constant'
 import axios from 'axios'
 import sha512 from 'js-sha512'
@@ -81,16 +81,22 @@ export default defineComponent({
         name: '',
         seqNo: 0
       }
-      axios.post<UserType>(Constant.URL_USER_LOGIN, userObj).then((res) => {
+      axios.post<LoginUserType>(Constant.URL_USER_LOGIN, userObj).then((res) => {
         if (res.data) {
           // ログイン成功
           titlelogoDisplay.value = false
-          store.commit("setUser", res.data)
+          store.commit("setToken", res.data.token)
+          store.commit("setUser", res.data.user)
           // 祝日テーブルを取得
           axios.get<HolidayType[]>(Constant.URL_HOLIDAY_GETLIST, {
-            auth: {
-              username: store.state.user.id,
-              password: store.state.user.password
+            // Basic認証の場合
+            // auth: {
+            //   username: store.state.user.id,
+            //   password: store.state.user.password,
+            // }
+            // JWT認証の場合
+            headers: {
+              'Authorization': 'Bearer ' + store.state.token,
             }
           }).then((h) => {
             store.commit('setHolidayList', h.data)

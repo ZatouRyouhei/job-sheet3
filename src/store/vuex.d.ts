@@ -6,7 +6,8 @@ declare module '@vue/runtime-core' {
   // ストアのステートを宣言する
   interface State {
     user: UserType,
-    holidayList: HolidayType[]
+    holidayList: HolidayType[],
+    token: string,
   }
 
   // `this.$store` の型付けを提供する
