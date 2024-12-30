@@ -41,6 +41,7 @@ export default defineComponent({
           seqNo: 0
       }
       store.commit("setUser", emptyUser)
+      store.commit("setToken", "")
       router.push("/")
     }
 
