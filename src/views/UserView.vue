@@ -17,7 +17,7 @@
         </p-data-table>
 
         <form @submit.prevent="handleSubmit(!v$.$invalid)" class="edit-form p-fluid">
-            <label id="user-id-label" for="user-id" class="required">ID（{{v$.id.maxLength.$params.max}}文字まで）</label>
+            <label id="user-id-label" for="user-id" class="required">ID（メールアドレス）</label>
 			<p-input-text id="user-id" type="text" v-model="v$.id.$model" :class="{'p-invalid':v$.id.$invalid && submitted}" :disabled="disabled" />
             <label id="name-label" for="name" class="required">氏名（{{v$.name.maxLength.$params.max}}文字まで）</label>
 			<p-input-text id="name" type="text" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" />
@@ -38,7 +38,7 @@
     import { UserType } from '@/constantType'
     import axios from '@/axios'
     import Constant from '@/constant'
-    import { required, maxLength, alphaNum } from "@vuelidate/validators";
+    import { required, maxLength, email } from "@vuelidate/validators";
     import { useVuelidate } from "@vuelidate/core";
     import { useToast } from "primevue/usetoast";
     import { useConfirm } from "primevue/useconfirm";
@@ -62,8 +62,7 @@
             const rules = {
                 id: {
                     required,
-                    alphaNum,
-					maxLength: maxLength(20)
+                    email
                 },
                 name: {
                     required,
@@ -79,11 +78,8 @@
                     if (v$.value.id.required.$invalid && submitted) {
                         addToast("IDを入力してください。")
                     }
-                    if (v$.value.id.alphaNum.$invalid && submitted) {
+                    if (v$.value.id.email.$invalid && submitted) {
                         addToast("IDは英数字で入力してください。")
-                    }
-                    if (v$.value.id.maxLength.$invalid && submitted) {
-                        addToast('IDは' + v$.value.id.maxLength.$params.max + '文字以内で入力してください。')
                     }
                     if (v$.value.name.required.$invalid && submitted) {
                         addToast("氏名を入力してください。")
@@ -94,18 +90,19 @@
                 } else {
                     // 入力エラーがない場合
                     loading.value = true
-                    // 登録するパスワード 新規登録のときは初期パスワード11111を設定する。
-                    let regPassword = sha512.sha512('11111')
-                    if (disabled.value) {  // 更新のときはパスワードは変更しない
-                        regPassword = ''
+                    // サーバではmodeにより新規か更新を判定する。
+                    // 新規登録のときはサーバでパスワードを生成する。
+                    let mode = "initial"
+                    if (disabled.value) {  // 更新のときはパスワードは変更しない。
+                        mode = "update"
                     }
                     const userObj: UserType = {
                         id: state.id,
                         name: state.name,
-                        password: regPassword,
+                        password: "",
                         seqNo: 0
                     }
-                    axios.post(Constant.URL_USER_REGIST, userObj).then(() => {
+                    axios.post(Constant.URL_USER_REGIST + mode, userObj).then(() => {
                         // 一覧を更新
                         axios.get<UserType[]>(Constant.URL_USER_GETLIST).then((res) => {
                             userList.value = res.data
@@ -173,18 +170,19 @@
             const initConfirm = (event:any) => {
                 confirm.require({
 					target: event.currentTarget,
-					message: 'パスワードを初期化してよろしいですか？初期パスワードは11111です。',
+					message: 'パスワードを初期化してよろしいですか？',
 					icon: 'pi pi-info-circle',
 					acceptClass: 'p-button-danger',
 					accept: () => {
 						initLoading.value = true
+                        let mode = "password"
                         const userObj: UserType = {
                             id: selectedUser.value.id,
                             name: selectedUser.value.name,
-                            password: sha512.sha512('11111'),
+                            password: "",
                             seqNo: 0
                         }
-                        axios.post(Constant.URL_USER_REGIST, userObj).then(() => {
+                        axios.post(Constant.URL_USER_REGIST + mode, userObj).then(() => {
                             toast.add({severity:'success', summary: '初期化しました。', life: 5000, group: 'tk', closable: false});
                         }).finally(() => {
                             initLoading.value = false
