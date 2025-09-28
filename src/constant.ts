@@ -1,4 +1,6 @@
-const URL_BASE = 'http://localhost/jobsheet/webresources/'
+// const URL_BASE = 'http://localhost/jobsheet/webresources/'
+//const URL_BASE = "https://di6oii7wmxbug.cloudfront.net/dev/jobsheet/webresources/"
+const URL_BASE = "https://satouxr.click/dev/jobsheet/webresources/"
 const URL_USER_LOGIN = URL_BASE + 'user/login/'
 const URL_USER_GETLIST = URL_BASE + 'user/getList/'
 const URL_USER_REGIST = URL_BASE + 'user/regist/'
