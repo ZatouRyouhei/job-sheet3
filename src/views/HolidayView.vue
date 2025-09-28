@@ -52,7 +52,7 @@ export default defineComponent({
             // 添付ファイル登録処理
             axios.post<ErrorMsgType[]>(Constant.URL_HOLIDAY_REGIST, params, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'text/csv'
                 }
             }).then((res) => {
                 errorList.value.length = 0

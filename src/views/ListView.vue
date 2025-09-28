@@ -418,10 +418,13 @@
       const downloadExcel = () => {
         excelDownloading.value = true
         axios.post(Constant.URL_JOBSHEET_DOWNLOAD, searchCondition.value, {
-          responseType:'blob'
+          responseType:'blob',
+          headers: {
+            "Accept":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          }
         }).then((res) => {
           const blob = new Blob([res.data], {
-                          type: "application/octet-stream"
+                          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         });
           saveAs(blob, "台帳.xlsx")
         }).finally(() => {
