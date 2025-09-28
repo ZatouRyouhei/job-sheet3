@@ -172,10 +172,10 @@
 				},
 				content: {
 					required,
-					maxLength: maxLength(500)
+					maxLength: maxLength(10000)
 				},
 				limitDate: {}, // 入力条件がない項目も空で入れておく必要がある。
-				support: {maxLength: maxLength(500)},
+				support: {maxLength: maxLength(10000)},
 				deal: {},
 				completeDate: {},
 				responseTime: {}
